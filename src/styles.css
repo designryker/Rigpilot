@@ -5085,3 +5085,93 @@ h1,
   .pc-summary>div{align-items:flex-start}
   .pc-summary strong{max-width:62%;font-size:.68rem;line-height:1.4}
 }
+
+/* === Passive Virtual PC + compact result artwork === */
+.pc-summary-empty{
+  margin:0;
+  padding:.7rem .75rem;
+  border:1px dashed rgba(105,167,255,.20);
+  border-radius:7px;
+  color:rgba(190,205,225,.58);
+  font-size:.72rem;
+  line-height:1.45;
+  text-align:center;
+}
+.pc-summary-row,
+.pc-part,
+.pc-status-strip span{
+  cursor:default!important;
+}
+.pc-summary-row:hover,
+.pc-summary-row.is-active,
+.pc-status-strip span:hover,
+.pc-status-strip span.is-active{
+  border-color:rgba(255,255,255,.06)!important;
+  background:rgba(255,255,255,.025)!important;
+  color:inherit!important;
+  box-shadow:none!important;
+}
+.pc-summary-row:hover span,
+.pc-summary-row:hover strong,
+.pc-summary-row.is-active span,
+.pc-summary-row.is-active strong{
+  color:inherit!important;
+}
+.res-hero-intro{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) clamp(150px,18vw,220px);
+  gap:1.15rem;
+  align-items:center;
+}
+.res-hero-intro:has(.result-part-artwork[hidden]){
+  grid-template-columns:1fr;
+}
+.res-hero-copy{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:.85rem;
+  min-width:0;
+}
+.res-hero-intro .result-part-artwork{
+  width:100%;
+  min-height:120px;
+  margin:0;
+  padding:.75rem;
+  border-radius:10px;
+}
+.res-hero-intro .result-component-svg{
+  width:min(100%,190px);
+  max-height:105px;
+}
+.res-hero-intro .result-cpu-artwork{
+  width:min(72%,125px);
+}
+.res-hero-intro .result-part-artwork::before{
+  inset:7px;
+  border-radius:7px;
+}
+.res-hero-intro .result-part-artwork::after{
+  bottom:9px;
+}
+@media(max-width:700px){
+  .res-hero-intro{
+    grid-template-columns:minmax(0,1fr) 120px;
+    gap:.75rem;
+  }
+  .res-hero-intro .result-part-artwork{
+    min-height:94px;
+    padding:.55rem;
+  }
+  .res-hero-intro .result-component-svg{
+    max-height:78px;
+  }
+}
+@media(max-width:480px){
+  .res-hero-intro{
+    grid-template-columns:1fr;
+  }
+  .res-hero-intro .result-part-artwork{
+    display:none;
+  }
+}

@@ -24,6 +24,8 @@ for (const id of ['system-type', 'os-version', 'game-drive', 'goal', 'game', 're
   assert.equal(document.getElementById(id)?.value, '', `#${id} should start without a user selection`);
 }
 assert.equal(document.querySelectorAll('.tg-btn.tg-active').length, 0, 'toggle buttons should start unselected');
+assert.equal(document.querySelectorAll('.pc-summary-row:not(.is-hidden)').length, 0, 'Virtual PC should not show empty summary rows');
+assert.equal(document.getElementById('pc-summary-empty')?.classList.contains('is-hidden'), false, 'Virtual PC should explain that selections appear automatically');
 
 setValue('system-type', 'desktop');
 applySystemModeToPartSelects();

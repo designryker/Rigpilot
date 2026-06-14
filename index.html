@@ -72,10 +72,11 @@
       </div>
     </div>
     <div class="pc-summary" id="pc-summary">
-      <div data-summary-part="cpu"><span>CPU</span><strong id="pc-summary-cpu">Not selected</strong></div>
-      <div data-summary-part="gpu"><span>GPU</span><strong id="pc-summary-gpu">Not selected</strong></div>
-      <div data-summary-part="ram"><span>RAM</span><strong id="pc-summary-ram">Not selected</strong></div>
-      <div data-summary-part="psu" id="pc-summary-power-row"><span id="pc-summary-power-label">Power</span><strong id="pc-summary-power">Not selected</strong></div>
+      <p class="pc-summary-empty" id="pc-summary-empty" data-i18n="pcSummaryEmpty">Your selected parts will appear here automatically.</p>
+      <div class="pc-summary-row is-hidden" data-summary-part="cpu"><span>CPU</span><strong id="pc-summary-cpu"></strong></div>
+      <div class="pc-summary-row is-hidden" data-summary-part="gpu"><span>GPU</span><strong id="pc-summary-gpu"></strong></div>
+      <div class="pc-summary-row is-hidden" data-summary-part="ram"><span>RAM</span><strong id="pc-summary-ram"></strong></div>
+      <div class="pc-summary-row is-hidden" data-summary-part="psu" id="pc-summary-power-row"><span id="pc-summary-power-label">Power</span><strong id="pc-summary-power"></strong></div>
     </div>
   </div>
 </header>
@@ -639,20 +640,24 @@
     <!-- LEFT: Recommendation hero -->
     <div class="res-main">
 
-      <!-- Recommended badge -->
-      <div class="res-rec-badge" id="res-rec-badge">
-        <span class="res-rec-dot"></span>
-        <span data-i18n="resRecommended">RECOMMENDED UPGRADE</span>
+      <div class="res-hero-intro">
+        <div class="res-hero-copy">
+          <!-- Recommended badge -->
+          <div class="res-rec-badge" id="res-rec-badge">
+            <span class="res-rec-dot"></span>
+            <span data-i18n="resRecommended">RECOMMENDED UPGRADE</span>
+          </div>
+
+          <!-- Big product name -->
+          <h2 class="res-product-name" id="res-product-name">—</h2>
+
+          <!-- Description -->
+          <p class="res-product-desc" id="res-product-desc"></p>
+        </div>
+
+        <!-- Conditional CPU / GPU line-art -->
+        <div class="result-part-artwork" id="result-part-artwork" data-artwork="" hidden></div>
       </div>
-
-      <!-- Big product name -->
-      <h2 class="res-product-name" id="res-product-name">—</h2>
-
-      <!-- Description -->
-      <p class="res-product-desc" id="res-product-desc"></p>
-
-      <!-- Conditional CPU / GPU line-art -->
-      <div class="result-part-artwork" id="result-part-artwork" data-artwork="" hidden></div>
 
       <!-- Price -->
       <div class="res-price-row">

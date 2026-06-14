@@ -173,6 +173,8 @@ assert.ok(indexSource.includes('src="/src/app.js"'), 'index should use the modul
 assert.ok(indexSource.includes('rel="icon" href="/favicon.svg"'), 'index should declare the UpgradePilot favicon');
 assert.ok(indexSource.includes('id="display-detect-feedback"'), 'display detection should expose visible feedback');
 assert.ok(indexSource.includes('id="result-part-artwork"'), 'result page should expose a conditional part artwork slot');
+assert.ok(indexSource.includes('class="res-hero-intro"'), 'result artwork should share a compact hero layout with the recommendation heading');
+assert.ok(indexSource.includes('id="pc-summary-empty"'), 'Virtual PC should have a passive empty-state explanation');
 assert.ok(indexSource.includes('result-analysis-section'), 'detailed analysis should use concise decision sections');
 assert.equal(
   (indexSource.match(/class="result-analysis-section"/g) || []).length,
@@ -185,6 +187,7 @@ assert.ok(indexSource.includes('id="result-analysis-next"'), 'analysis should sh
 assert.ok(resultArtworkSource.includes('result-gpu-artwork'), 'result artwork module should include a GPU line-art illustration');
 assert.ok(resultArtworkSource.includes('result-cpu-artwork'), 'result artwork module should include a CPU line-art illustration');
 assert.ok(eventsSource.includes("label = () => inTr(labelEn, labelTr)"), 'dynamic Virtual PC focus labels should follow the active language');
+assert.equal(uiPartsSource.includes("document.querySelectorAll('[data-summary-part]').forEach"), false, 'Virtual PC summary rows should not be wired as controls');
 assert.ok(styleSource.includes('/* === Result clarity pass === */'), 'result clarity styles should be present');
 assert.ok(styleSource.includes('.result-analysis-legacy{display:none!important}'), 'legacy detailed-analysis clutter should stay hidden');
 assert.ok(styleSource.includes('.pc-summary strong{'), 'mobile Virtual PC summaries should have a wrapping rule');

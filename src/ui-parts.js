@@ -83,22 +83,17 @@ export function updateVirtualPcSummary() {
   if (powerLabel) powerLabel.textContent = isLaptopMode ? inTr('Power Mode', 'Güç Modu') : inTr('Power', 'Güç');
   if (powerStatus) powerStatus.textContent = isLaptopMode ? inTr('Mode', 'Mod') : 'PSU';
 
-  if (!hasTouchedSpecs) {
-    const empty = inTr('Not selected', 'Seçilmedi');
-    ['pc-summary-cpu', 'pc-summary-gpu', 'pc-summary-ram', 'pc-summary-power'].forEach(id => {
-      const n = el(id); if (n) n.textContent = empty;
-    });
-    return;
-  }
-
-  const cpu   = selectedOptionText('cpu') || 'CPU';
-  const gpu   = selectedOptionText('gpu') || 'GPU';
-  const ram   = (selectedOptionText('ram') || 'RAM') + ' ' + (selectedOptionText('ram-type') || '');
+  const cpu   = selectedOptionText('cpu');
+  const gpu   = selectedOptionText('gpu');
+  const ramCapacity = selectedOptionText('ram');
+  const ramType = selectedOptionText('ram-type');
+  const ram   = [ramCapacity, ramType].filter(Boolean).join(' ');
   const speed = selectedOptionText('ram-speed');
   const channel = selectedOptionText('channel');
-  const power = isLaptopMode
+  const hasPower = hasTouchedSpecs && (isLaptopMode || Boolean(el('psu-watts')?.value));
+  const power = !hasPower ? '' : isLaptopMode
     ? inTr('Charger / power mode', 'Adaptör / güç modu')
-    : (el('psu-watts')?.value || '650') + 'W PSU';
+    : el('psu-watts')?.value + 'W PSU';
 
   const cpuNode   = el('pc-summary-cpu');
   const gpuNode   = el('pc-summary-gpu');
@@ -106,8 +101,17 @@ export function updateVirtualPcSummary() {
   const powerNode = el('pc-summary-power');
   if (cpuNode)   cpuNode.textContent   = cpu.replace(/^Intel /, '');
   if (gpuNode)   gpuNode.textContent   = gpu;
-  if (ramNode)   ramNode.textContent   = ram + (speed ? ' / ' + speed.replace(/^DDR[45]\s*/, '') : '') + (channel ? ' / ' + channel : '');
+  if (ramNode)   ramNode.textContent   = ram + (ram && speed ? ' / ' + speed.replace(/^DDR[45]\s*/, '') : '') + (ram && channel ? ' / ' + channel : '');
   if (powerNode) powerNode.textContent = power;
+
+  const summaryValues = { cpu, gpu, ram, psu: power };
+  let visibleRows = 0;
+  document.querySelectorAll('.pc-summary-row[data-summary-part]').forEach(row => {
+    const visible = Boolean(summaryValues[row.dataset.summaryPart]);
+    row.classList.toggle('is-hidden', !visible);
+    if (visible) visibleRows += 1;
+  });
+  el('pc-summary-empty')?.classList.toggle('is-hidden', visibleRows > 0);
 }
 
 export function setVirtualPcPart(part, label) {
@@ -134,12 +138,6 @@ function wirePartTarget(node, part, label) {
 export function initVirtualPcMap() {
   document.querySelectorAll('[data-pc-part]').forEach(node => {
     wirePartTarget(node, node.dataset.pcPart, node.dataset.pcLabel || partLabel(node.dataset.pcPart));
-  });
-  document.querySelectorAll('[data-summary-part]').forEach(node => {
-    wirePartTarget(node, node.dataset.summaryPart, node.dataset.pcLabel || partLabel(node.dataset.summaryPart));
-  });
-  document.querySelectorAll('.pc-part[data-part]').forEach(node => {
-    wirePartTarget(node, node.dataset.part, node.dataset.pcLabel || partLabel(node.dataset.part));
   });
 }
 
