@@ -16,7 +16,7 @@ dom.window.setTimeout = () => 0;
 globalThis.setTimeout = () => 0;
 
 const { analyze } = await import('../src/analyze.js');
-const { applySystemModeToPartSelects } = await import('../src/ui-parts.js');
+const { applySystemModeToPartSelects, updateVirtualPcSummary } = await import('../src/ui-parts.js');
 const { bindEvents } = await import('../src/events.js');
 const { setCurrentLang } = await import('../src/state.js');
 
@@ -29,8 +29,11 @@ assert.equal(document.getElementById('pc-summary-empty')?.classList.contains('is
 
 setValue('system-type', 'desktop');
 applySystemModeToPartSelects();
+updateVirtualPcSummary();
 assert.equal(document.getElementById('cpu').value, '', 'desktop mode should not auto-select a CPU');
 assert.equal(document.getElementById('gpu').value, '', 'desktop mode should not auto-select a GPU');
+assert.equal(document.querySelectorAll('.pc-summary-row:not(.is-hidden)').length, 0, 'Virtual PC should not show placeholder select labels after choosing only system type');
+assert.equal(document.getElementById('pc-summary-empty')?.classList.contains('is-hidden'), false, 'Virtual PC empty note should remain until real parts are selected');
 setValue('system-type', 'laptop');
 applySystemModeToPartSelects();
 assert.equal(document.getElementById('cpu').value, '', 'laptop mode should not auto-select a CPU');

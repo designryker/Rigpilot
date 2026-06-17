@@ -30,7 +30,9 @@ export function showAnalysisError(message) {
 
 export function selectedOptionText(id) {
   const node = el(id);
-  return node?.selectedOptions?.[0]?.textContent?.trim() || '';
+  const option = node?.selectedOptions?.[0];
+  if (!node?.value || option?.disabled || option?.value === '') return '';
+  return option?.textContent?.trim() || '';
 }
 
 export function groupLabel(g) {
